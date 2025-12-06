@@ -50,11 +50,18 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         return df
 
 
-# ============ #
-# Load Model   #
-# ============ #
-with open("medical_model.pkl", "rb") as file:
-    model = pickle.load(file)
+# ================= #
+# FIX PICKLE LOADING
+# ================= #
+
+class CustomUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if name == 'FeatureEngineer':       # <- مهم
+            return FeatureEngineer
+        return super().find_class(module, name)
+
+with open("medical_model.pkl", "rb") as f:
+    model = CustomUnpickler(f).load()
 
 
 # ============ #
@@ -64,7 +71,8 @@ app = FastAPI()
 
 @app.get("/")
 def root():
-    return {"message": "🚀 Medical Model API is Running Successfully!"}
+    return {"message": "🚀 API is Running Successfully!"}
+
 
 class InputData(BaseModel):
     Temp1: float
@@ -77,7 +85,7 @@ class InputData(BaseModel):
     BigF_P: float
     Side_P: float
     Center_P: float
-    
+
 
 @app.post("/predict")
 def predict(data: InputData):
