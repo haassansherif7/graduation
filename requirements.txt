@@ -1,8 +1,9 @@
 fastapi
 numpy==2.1.0
-scikit-learn==1.4.1
+scikit-learn==1.4.2
 pandas==2.2.2
 seaborn==0.13.2
 uvicorn
 joblib
 pickle5
+
