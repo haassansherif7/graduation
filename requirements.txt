@@ -1,10 +1,8 @@
 fastapi
-uvicorn[standard]
-numpy
-scikit-learn
-pandas
-seaporn
-matplitlips
-warnnings
-pickle
-pydantic
+numpy==2.1.0
+scikit-learn==1.4.1
+pandas==2.2.2
+seaborn==0.13.2
+uvicorn
+joblib
+pickle5
